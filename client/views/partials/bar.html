@@ -1,0 +1,20 @@
+<h2 class="lead text-center">Bar</h2>
+<div class="table-responsive">
+  <table class="table table-hover table-condensed">
+    <colgroup>
+      <col span="1" style="width: 33%;">
+      <col span="1" style="width: 33%;">
+      <col span="1" style="width: 34%;">
+    </colgroup>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+    <tr ng-repeat="b in bar">
+      <td>{{ b._id }}</td>
+      <td>{{ b.name }}</td>
+      <td>{{ b.desc }}</td>
+    </tr>
+  </table>
+</div>
