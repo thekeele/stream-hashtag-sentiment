@@ -10,16 +10,20 @@ var express = require('express')
   , sys = require("sys")
   , fs = require("fs")
   , path = require('path')
-  , mongoose = require('mongoose')
-  , database = require('./server/config/db')
-  , FooSchema = require('./server/models/foo')
-  , BarSchema = require('./server/models/bar');
+  , socketio = require('socket.io');
+  // , mongoose = require('mongoose')
+  // , database = require('./server/config/db')
+  // , FooSchema = require('./server/models/foo')
+  // , BarSchema = require('./server/models/bar');
 
-// Create App
-var app = express();
+
+// create app, server, sockets
+var app = module.exports = express();
+var server = http.createServer(app);
+var io = socketio.listen(server);
 
 // Database Connection
-var db = mongoose.connection;
+// var db = mongoose.connection;
 
 // https options
 // var options = {
@@ -31,12 +35,12 @@ var db = mongoose.connection;
 // };
 
 // Check db connection
-db.on('error', console.error);
+// db.on('error', console.error);
 
 // This calls our schemas defined in app/models
 // and inserts a few test objects into the db
 // *note* this code only runs once
-db.once('open', function(error, client) {
+/*db.once('open', function(error, client) {
   console.log('Connected to ' + database.url);
   // load schemas
   var Foo = mongoose.model('Foo', FooSchema);
@@ -58,10 +62,10 @@ db.once('open', function(error, client) {
     if (err) return console.error(err);
     console.log('Inserting object ' + baring.name);
   });
-});
+});*/
 
 // Connect to db
-mongoose.connect(database.url);
+// mongoose.connect(database.url);
 
 // App Configuration
 app.configure(function() {
@@ -71,7 +75,6 @@ app.configure(function() {
   app.use(express.logger('dev'));
   app.use(express.json());
   app.use(express.urlencoded());
-  app.use(app.router);
   app.use(express.methodOverride());
 });
 
@@ -80,11 +83,14 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// All Server Routes
+// All HTTP Routes
 require('./server/routes.js')(app);
 
+// All Socket Routes
+require('./server/sockets.js')(app);
+
 // Unsecure Server
-http.createServer(app).listen(app.get('port'), function(){
+server.listen(app.get('port'), function(){
   console.log('Node http server lending an ear on port ' + app.get('port'));
 });
 
@@ -95,5 +101,8 @@ http.createServer(app).listen(app.get('port'), function(){
   // res.end("Hello World, " + req.connection.getPeerCertificate().subject.CN + "\n");
 // }).listen(8000);
 
-// Expose app
-exports = module.exports = app;
+// setup socket.io communication
+io.sockets.on('connection', function(client_socket){
+  var sock = require('./app/sockets');
+  sock(client_socket);
+});
