@@ -22,10 +22,6 @@ module.exports = function (client_socket) {
   var tweetBuffer = [];
 
   var tweet = new twit({
-      consumer_key:         'TLtsLmgRmn0c8mj2HYwAt1E44',
-      consumer_secret:      'Lk5Hv5wy9BfhE2Uk9xQceG5J9rHv2sDaw5I71tdNatUCjJxbtK',
-      access_token:         '1546258921-5Dk4ybc9cL2NLAIzQHdg5jhfKrFLHYR0GyRIOXP',
-      access_token_secret:  'YARvN5yO5gfxHN2u8lr3xTWb4Dj0BXvGZgo3lon28Quw4'
   });
 
   var stream = tweet.stream('statuses/filter', { locations: [-122.75,36.8,-121.75,37.8] });
