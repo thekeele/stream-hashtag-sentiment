@@ -69,7 +69,7 @@ mongoose.connect(database.url);
 
 // App Configuration
 app.configure(function() {
-  app.set('port', process.env.PORT || 8000);
+  app.set('port', process.env.PORT || 8002);
   app.use(express.static(__dirname + '/client'));
   app.use(express.favicon(__dirname + '/client/images/favicon.ico'));
   app.use(express.logger('dev'));
