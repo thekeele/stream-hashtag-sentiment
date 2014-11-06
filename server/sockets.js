@@ -11,47 +11,48 @@
 // Include Modules
 var twit = require('twit');
 
-var nbOpenSockets = 0;
+// Global Variables
+var numClients = 0;
+var TWEET_BUFF = 1;
+var tweetBuffer = [];
+
+// Access Control
+var tweet = new twit({
+  consumer_key:         'TLtsLmgRmn0c8mj2HYwAt1E44',
+  consumer_secret:      'Lk5Hv5wy9BfhE2Uk9xQceG5J9rHv2sDaw5I71tdNatUCjJxbtK',
+  access_token:         '1546258921-5Dk4ybc9cL2NLAIzQHdg5jhfKrFLHYR0GyRIOXP',
+  access_token_secret:  'YARvN5yO5gfxHN2u8lr3xTWb4Dj0BXvGZgo3lon28Quw4'
+});
 
 module.exports = function (client_socket) {
 
-  // establish client socket
-  console.log('Client connected');
+  // stream tweets with the word bitcoin
+  var stream = tweet.stream('statuses/filter', { track: 'bitcoin' });
+  console.log("Listening for tweets with the word bitcoin...");
 
-  var TWEET_BUFF = 3;
-  var tweetBuffer = [];
-
-  var tweet = new twit({
-  });
-
-  var stream = tweet.stream('statuses/filter', { locations: [-122.75,36.8,-121.75,37.8] });
-  console.log("Listening for tweets from San Francisco...");
-
-  if (nbOpenSockets <= 0) {
-      nbOpenSockets = 0;
-      console.log('First active client. Start streaming from Twitter');
-      stream.start();
+  if (numClients <= 0) {
+    numClients = 0;
+    console.log('Client Connected. Starting stream from Twitter');
   }
 
-  nbOpenSockets++;
+  numClients++;
 
   client_socket.on('disconnect', function() {
-      console.log('Client disconnected');
-      nbOpenSockets--;
+    numClients--;
 
-      if (nbOpenSockets <= 0) {
-          nbOpenSockets = 0;
-          console.log("No active client. Stop streaming from Twitter");
-          stream.stop();
-      }
+    if (numClients <= 0) {
+      numClients = 0;
+      console.log("Client Disconnected. Stop stream from Twitter");
+      stream.stop();
+    }
   });
 
   stream.on('connect', function(request) {
-      console.log('Connected to Twitter API');
+    console.log('Connected to Twitter API');
   });
 
   stream.on('disconnect', function(message) {
-      console.log('Disconnected from Twitter API. Message: ' + message);
+    console.log('Disconnected from Twitter API. Message: ' + message);
   });
 
   stream.on('reconnect', function (request, response, connectInterval) {
@@ -59,30 +60,29 @@ module.exports = function (client_socket) {
   });
 
   stream.on('tweet', function(tweet) {
-      if (tweet.geo == null) {
-          return ;
-      }
+    var msg = {};
+    msg.text = tweet.text;
+    msg.created = tweet.created_at;
+    msg.ts = tweet.timestamp_ms;
+    msg.user = {
+        name: tweet.user.name,
+        location: tweet.user.location
+    };
 
-      //Create message containing tweet + username + profile pic + geo
-      var msg = {};
-      msg.text = tweet.text;
-      msg.geo = tweet.geo.coordinates;
-      msg.user = {
-          name: tweet.user.name,
-          image: tweet.user.profile_image_url
-      };
+    // log message to console
+    console.log(msg);
 
-      console.log(msg);
+    // push msg into buffer
+    tweetBuffer.push(msg);
 
-      //push msg into buffer
-      tweetBuffer.push(msg);
+    // send buffer only if full
+    if (tweetBuffer.length >= TWEET_BUFF) {
+      // broadcast tweets to client
+      client_socket.emit('tweets', tweetBuffer);
 
-      //send buffer only if full
-      if (tweetBuffer.length >= TWEET_BUFF) {
-          //broadcast tweets
-          client_socket.emit('tweets', tweetBuffer);
-          tweetBuffer = [];
-      }
+      // empty buffer
+      tweetBuffer = [];
+    }
   });
 
 };
