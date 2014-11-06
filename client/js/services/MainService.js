@@ -4,7 +4,7 @@
  * MainService.js
  */
 
-angular.module('MainService', []).service('Main', function($http) {
+angular.module('MainService', []).service('Main', function($http, Socket) {
 
   this.getMain = function(mainInfo) {
     $http.get('/api')
@@ -15,6 +15,13 @@ angular.module('MainService', []).service('Main', function($http) {
       .error(function(data) {
         console.log('Error: ' + data);
       });
+  };
+
+  this.getSocket = function(tweets) {
+    Socket.on('tweets',function(data){
+      console.log('Incoming Socket Tweet Data: ' , data);
+      tweets(data);
+    });
   };
 
 });

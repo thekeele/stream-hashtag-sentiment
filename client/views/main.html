@@ -1,8 +1,4 @@
-<div class="jumbotron">
-  <h1>'Oi, 'Oi!</h1>
-  <p class="lead">
-    <img src="images/danger-will-robinson.gif" alt="Better Play it Safe"><br>
-    Minimal MEAN Seed for your Pleasure
-  </p>
-  <p><a class="btn btn-lg btn-material-red" ng-href="#">Danger Will Robinson <span class="glyphicon glyphicon-bullhorn"></span></a></p>
+<div class="panel panel-default" ng-repeat="tweet in tweets | orderBy:'-ts'">
+  <div class="panel-heading">{{tweet.user.name}} | {{tweet.created}} | {{tweet.user.location}}</div>
+  <div class="panel-body">{{tweet.text}}</div>
 </div>
