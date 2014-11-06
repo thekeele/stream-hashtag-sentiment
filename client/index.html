@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Minimal MEAN Seed</title>
+  <title>Streaming Sentiment</title>
   <meta name="Min MEAN Seed" content="">
 
   <!-- Mobile -->
@@ -27,12 +27,12 @@
   <![endif]-->
 
   <!-- Github Fork Ribbon -->
-  <div class="ribbon">
-    <a href="https://github.com/thekeele/min-mean-seed">Fork me on GitHub</a>
-  </div>
+  <!-- <div class="ribbon"> -->
+    <!-- <a href="https://github.com/thekeele/min-mean-seed">Fork me on GitHub</a> -->
+  <!-- </div> -->
 
   <!-- Header and Nav Bar -->
-  <nav class="navbar navbar-material-deeppurple navbar-fixed-top" role="navigation">
+  <nav class="navbar navbar-material-green navbar-fixed-top" role="navigation">
     <div class="container-fluid">
 
       <div class="navbar-header">
@@ -48,29 +48,29 @@
         <!-- </button> -->
 
         <a class="navbar-brand" href="/">
-          <i class="icon icon-material-communities" style="font-size: 25pt;"></i> Minimal MEAN Seed
+          <i class="icon icon-material-communities" style="font-size: 25pt;"></i> Streaming Sentiment
         </a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="/foo">Foo</a></li>
-          <li><a href="/bar">Bar</a></li>
+          <!-- <li><a href="/foo">Foo</a></li> -->
+          <!-- <li><a href="/bar">Bar</a></li> -->
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/foo">Help Me</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bardown <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="/bar">Wow</a></li>
-              <li><a href="/foo">Such</a></li>
-              <li><a href="/bar">Menu</a></li>
-              <li class="divider"></li>
-              <li><a href="/foo">That divided link</a></li>
-            </ul>
-          </li>
-        </ul>
+        <!-- <ul class="nav navbar-nav navbar-right"> -->
+          <!-- <li><a href="/foo">Help Me</a></li> -->
+          <!-- <li class="dropdown"> -->
+            <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bardown <span class="caret"></span></a> -->
+            <!-- <ul class="dropdown-menu" role="menu"> -->
+              <!-- <li><a href="/bar">Wow</a></li> -->
+              <!-- <li><a href="/foo">Such</a></li> -->
+              <!-- <li><a href="/bar">Menu</a></li> -->
+              <!-- <li class="divider"></li> -->
+              <!-- <li><a href="/foo">That divided link</a></li> -->
+            <!-- </ul> -->
+          <!-- </li> -->
+        <!-- </ul> -->
       </div><!-- /.navbar-collapse -->
 
     </div>
@@ -83,10 +83,10 @@
   </div>
 
   <!-- <div id="footer"> -->
-  <div class="container-fluid">
-    <hr />
-    <p class="lead">Thanks for seeding</p>
-  </div>
+  <!-- <div class="container-fluid"> -->
+    <!-- <hr /> -->
+    <!-- <p class="lead">Thanks for seeding</p> -->
+  <!-- </div> -->
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
   <script>
@@ -105,6 +105,7 @@
   <![endif]-->
 
   <!-- JS Libs -->
+  <script src="/socket.io/socket.io.js"></script>
   <script src="libs/bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script src="libs/bower_components/bootstrap-material-design/template/material/scripts/ripples.js"></script>
   <script src="libs/bower_components/bootstrap-material-design/template/material/scripts/material.js"></script>
@@ -123,6 +124,7 @@
   <script src="js/services/FooService.js"></script>
   <script src="js/controllers/BarCtrl.js"></script>
   <script src="js/services/BarService.js"></script>
+  <script src="js/services/SocketService.js"></script>
   <script src="js/appRoutes.js"></script>
   <script src="js/app.js"></script>
 </body>
