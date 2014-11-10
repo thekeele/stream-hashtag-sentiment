@@ -1,7 +1,7 @@
 {
-  "name": "mean-seed",
+  "name": "stream-hashtag-sentiment",
   "version": "0.1.0",
-  "description": "minimal mean seed application",
+  "description": "stream tweets from given hashtag",
   "author": "Mark Keele <m.keele88@gmail.com>",
   "main": "server.js",
   "private": false,
@@ -54,6 +54,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:thekeele/mean-seed.git"
+    "url": "git@github.com:thekeele/stream-hashtag-sentiment.git"
   }
 }
