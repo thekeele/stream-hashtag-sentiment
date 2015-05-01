@@ -3,6 +3,7 @@
 # Example
 # http://www.laurentluce.com/posts/twitter-sentiment-analysis-using-python-and-nltk/
 
+# Positive list of tuple entries, text and sentiment. Used for training
 pos_train_tweets = [
     ('I love bitcoin', 'positive'),
     ('Bitcoin is great', 'positive'),
@@ -11,6 +12,7 @@ pos_train_tweets = [
     ('Bitcoin is my best friend', 'positive')
 ]
 
+# Negative list of tuple entries, text and sentiment. Used for training
 neg_train_tweets = [
     ('I hate bitcoin', 'negative'),
     ('Bitcoin is stupid', 'negative'),
@@ -19,6 +21,7 @@ neg_train_tweets = [
     ('Bitcoin is the devil', 'negative')
 ]
 
+# Mixed list of tuple entries, text and sentiment. Used for testing
 test_tweets = [
     ('Bitcoin is the truth', 'positive'),
     ('Bitcoin is fantastic', 'positive'),
@@ -27,6 +30,11 @@ test_tweets = [
     ('Death to Bitcoin', 'negative'),
 ]
 
+# Function: word_filter
+# Argument: List of tuples, text and sentiment
+#  Filters out words that are less than 3 characters
+#  Also filters out words that don't help with determining sentiment
+# Return: List of tuples, text and sentiment. All lowercase characters
 def word_filter(tweets):
     processed_tweets = []
 
