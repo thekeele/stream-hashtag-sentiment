@@ -3,6 +3,11 @@
 # Example
 # http://www.laurentluce.com/posts/twitter-sentiment-analysis-using-python-and-nltk/
 
+## Modules
+import nltk
+
+## Data
+
 # Positive list of tuple entries, text and sentiment. Used for training
 pos_train_tweets = [
     ('I love bitcoin', 'positive'),
@@ -29,6 +34,8 @@ test_tweets = [
     ('Bitcoin is worthless', 'negative'),
     ('Death to Bitcoin', 'negative'),
 ]
+
+## Data Cleaning
 
 # Function: word_filter
 # Argument: List of tuples, text and sentiment
@@ -57,4 +64,39 @@ train_tweets = word_filter(pos_train_tweets + neg_train_tweets)
 print 'Training tweets: \n', train_tweets
 
 test_tweets = word_filter(test_tweets)
-print 'Testing tweets: \n', test_tweets
+print '\nTesting tweets: \n', test_tweets
+
+## Classifier
+
+# Function: get_all_words
+# Argument: List of tuples, text and sentiment
+#  Creates list of all words found in tuple argument
+# Return: List of words. All lowercase characters
+def get_all_words(tweets):
+    all_words = []
+
+    for words, sentiment in tweets:
+        all_words.extend(words)
+
+    return all_words
+
+all_words = get_all_words(train_tweets)
+print '\nAll words: \n', all_words
+
+# Function: get_word_features
+# Argument: List of tokens
+#  Computes Frequency Distribution on list, number of occurrences
+# Return: List of unique words, most frequent to least
+def get_word_features(word_list):
+    word_list = nltk.FreqDist(word_list)
+
+    print '\n', word_list
+
+    for key, val in word_list.items():
+        print key, val
+
+    word_features = word_list.keys()
+    return word_features
+
+word_features = get_word_features(all_words)
+print '\nWord features: \n', word_features
